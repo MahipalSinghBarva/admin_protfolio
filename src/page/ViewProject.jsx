@@ -24,7 +24,7 @@ const ViewProject = () => {
   useEffect(() => {
     const getProject = async () => {
       await axios
-        .get(`http://localhost:3000/api/v1/project/${id}`, {
+        .get(`https://servrer-portfolio.onrender.com/api/v1/project/${id}`, {
           withCredentials: true,
         })
         .then((res) => {

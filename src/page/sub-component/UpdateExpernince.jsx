@@ -78,7 +78,7 @@ const UpdateExpernince = () => {
     const fetchExperience = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/expernince/${id}`
+          `https://servrer-portfolio.onrender.com/api/v1/expernince/${id}`
         );
         const data = response.data.expernince;
         setExperninceData(data);

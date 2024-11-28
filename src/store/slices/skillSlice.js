@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
-const baseURL = "http://localhost:3000"
+const baseURL = "https://servrer-portfolio.onrender.com"
 
 const skillSlice = createSlice({
     name: "skill",
