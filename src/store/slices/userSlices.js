@@ -114,7 +114,7 @@ const userSlice = createSlice({
 export const login = (email, password) => async (dispatch) => {
     dispatch(userSlice.actions.loginRequest())
     try {
-        const { data } = await axios.post("http://localhost:3000/api/v1/user/login", { email, password },
+        const { data } = await axios.post(`${baseURL}/api/v1/user/login`, { email, password },
             { withCredentials: true, headers: { "Content-Type": "application/json" } }
         )
         console.log(data);
@@ -129,7 +129,7 @@ export const login = (email, password) => async (dispatch) => {
 export const getUser = () => async (dispatch) => {
     dispatch(userSlice.actions.loadUserRequest())
     try {
-        const { data } = await axios.get("http://localhost:3000/api/v1/user/me",
+        const { data } = await axios.get(`${baseURL}/api/v1/user/me`,
             { withCredentials: true }
         )
         dispatch(userSlice.actions.loadUserSuccess(data.user))
@@ -142,7 +142,7 @@ export const getUser = () => async (dispatch) => {
 
 export const logoutUser = () => async (dispatch) => {
     try {
-        const { data } = await axios.post("http://localhost:3000/api/v1/user/logout",
+        const { data } = await axios.post(`${baseURL}/api/v1/user/logout`,
             { withCredentials: true }
         )
         dispatch(userSlice.actions.logoutSuccess(data.message))
