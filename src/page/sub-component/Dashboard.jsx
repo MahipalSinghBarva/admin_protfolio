@@ -22,14 +22,20 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { toast } from "react-toastify";
-import { clearAllTimelineErrors, getAllTimeline } from "@/store/slices/timelineSlice";
+import {
+  clearAllTimelineErrors,
+  getAllTimeline,
+} from "@/store/slices/timelineSlice";
 import {
   clearAllSoftwareAppErrors,
   deleteSoftwareApplication,
   getAllSoftwareApplications,
   resetSoftwareApplicationSlice,
 } from "@/store/slices/softwareApplicationSlice";
-import { clearAllProjectErrors, getAllProjects } from "@/store/slices/projectSlice";
+import {
+  clearAllProjectErrors,
+  getAllProjects,
+} from "@/store/slices/projectSlice";
 import { clearAllSkillErrors, getAllSkills } from "@/store/slices/skillSlice";
 import SpacialLoadingButton from "./SpacialLoadingButton";
 import { getAllExperience } from "@/store/slices/experninceSlice";
@@ -55,17 +61,16 @@ const Dashboard = () => {
   } = useSelector((state) => state.softwareApplication);
 
   const {
-    expernince
+    expernince,
     // loading: experninceLoading,
     // error: experninceError,
     // message: experninceMessage,
   } = useSelector((state) => state.expernince);
-// console.log(expernince);
+  // console.log(expernince);
 
   const { projects, error: projectError } = useSelector(
     (state) => state.project
   );
- 
 
   const gotoMangeSkills = () => {
     navigateTo("/manage/skills");
@@ -104,27 +109,27 @@ const Dashboard = () => {
       dispatch(resetSoftwareApplicationSlice());
       dispatch(getAllSoftwareApplications());
     }
-    // if (timelineError) {
-    //   toast.error(timelineError);
-    //   dispatch(clearAllTimelineErrors());
-    // }
-    dispatch(getAllProjects())
-    dispatch(getAllSkills())
-    dispatch(getAllSoftwareApplications());
-    dispatch(getAllExperience())
 
-  }, [
-    dispatch,
-    // skillLoading,
-    skillError,
-    skillMessage,
-    // appLoading,
-    appError,
-    appMessage,
-    // timelineError,
-    // timelineLoading,
-    // timelineMessage,
-  ]);
+    // dispatch(getAllProjects())
+    // dispatch(getAllSkills())
+    // dispatch(getAllSoftwareApplications());
+    // dispatch(getAllExperience())
+  }, [dispatch, skillError, skillMessage, appError, appMessage]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        await dispatch(getAllProjects());
+        await dispatch(getAllSkills())
+        await dispatch(getAllSoftwareApplications());
+        await dispatch(getAllExperience());
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchData();
+  }, [dispatch]);
   return (
     <>
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -134,24 +139,23 @@ const Dashboard = () => {
               <Card className="sm:col-span-2">
                 <CardHeader className="pb-3">
                   <CardDescription className="max-w-lg text-balance leading-relaxed">
-                    {user.aboutMe}
+                    {user?.aboutMe}
                   </CardDescription>
                   <CardDescription className="max-w-lg text-balance leading-relaxed">
-                    Phone No:- {user.phone}
+                    Phone No:- {user?.phone}
                   </CardDescription>
                 </CardHeader>
-                <CardFooter >
-                  <Link to={user.portfolioURL} target="_blank" >
-                  <Button onClick={gotoProfile}>Visit Portfolio</Button>
+                <CardFooter>
+                  <Link to={user?.portfolioURL} target="_blank">
+                    <Button onClick={gotoProfile}>Visit Portfolio</Button>
                   </Link>
-                  
                 </CardFooter>
               </Card>
               <Card className="flex flex-col justify-center">
                 <CardHeader className="pb-2">
                   <CardTitle>Projects Completed</CardTitle>
                   <CardTitle className="text-6xl animate-blink">
-                    {projects && projects.length}
+                    {projects && projects?.length}
                   </CardTitle>
                 </CardHeader>
                 <CardFooter>
@@ -162,7 +166,7 @@ const Dashboard = () => {
                 <CardHeader className="pb-2">
                   <CardTitle>Skills Added</CardTitle>
                   <CardTitle className="text-6xl animate-blink">
-                    {skills.skill && skills.skill.length}
+                    {skills?.skill && skills?.skill?.length}
                   </CardTitle>
                 </CardHeader>
                 <CardFooter>
@@ -194,8 +198,8 @@ const Dashboard = () => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {projects && projects.length > 0 ? (
-                          projects.map((element) => {
+                        {projects && projects?.length > 0 ? (
+                          projects?.map((element) => {
                             return (
                               <TableRow className="bg-accent" key={element._id}>
                                 <TableCell>
@@ -250,8 +254,8 @@ const Dashboard = () => {
                     <CardTitle>Skills</CardTitle>
                   </CardHeader>
                   <CardContent className="grid sm:grid-cols-4 gap-4 ">
-                    {skills.skill && skills.skill.length > 0 ? (
-                      skills.skill.map((element) => {
+                    {skills?.skill && skills?.skill?.length > 0 ? (
+                      skills?.skill?.map((element) => {
                         return (
                           <Card key={element._id}>
                             <CardHeader>{element.title}</CardHeader>
@@ -286,9 +290,9 @@ const Dashboard = () => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {softwareApplications.application &&
-                        softwareApplications.application.length > 0 ? (
-                          softwareApplications.application.map((element) => {
+                        {softwareApplications?.application &&
+                        softwareApplications?.application?.length > 0 ? (
+                          softwareApplications?.application?.map((element) => {
                             return (
                               <TableRow className="bg-accent" key={element._id}>
                                 <TableCell className="font-medium">
@@ -342,7 +346,7 @@ const Dashboard = () => {
                     <Table>
                       <TableHeader>
                         <TableRow>
-                        <TableHead>Company</TableHead>
+                          <TableHead>Company</TableHead>
                           <TableHead>Designation</TableHead>
                           <TableHead className="md:table-cell">From</TableHead>
                           <TableHead className="md:table-cell text-right">
@@ -351,11 +355,12 @@ const Dashboard = () => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {expernince.expernince && expernince.expernince.length > 0 ? (
-                          expernince.expernince.map((element) => {
+                        {expernince?.expernince &&
+                        expernince?.expernince?.length > 0 ? (
+                          expernince?.expernince?.map((element) => {
                             return (
                               <TableRow className="bg-accent" key={element._id}>
-                                 <TableCell className="font-medium">
+                                <TableCell className="font-medium">
                                   {element.company}
                                 </TableCell>
                                 <TableCell className="font-medium">
