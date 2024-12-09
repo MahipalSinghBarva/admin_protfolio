@@ -12,6 +12,7 @@ import {
 } from "@/store/slices/experninceSlice";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { baseURL } from "@/store/slices/baseUrl";
 
 const UpdateExpernince = () => {
   const { id } = useParams();
@@ -31,7 +32,7 @@ const UpdateExpernince = () => {
   const [companyLogo, setCompanyLogo] = useState(null);
   const [svgPreview, setSvgPreview] = useState("");
 
-  console.log(experninceData, "jkhg");
+  // console.log(experninceData, "jkhg");
 
   const handleAddLogo = (e) => {
     const file = e.target.files[0];
@@ -74,23 +75,23 @@ const UpdateExpernince = () => {
     }
   }, [dispatch, error, message, id]);
 
-  useEffect(() => {
-    const fetchExperience = async () => {
-      try {
-        const response = await axios.get(
-          `https://servrer-portfolio.onrender.com/api/v1/expernince/${id}`
-        );
-        const data = response.data.expernince;
-        setExperninceData(data);
-        setDesignation(data.designation || "");
-        setcompany(data.company || "");
-        setDetails(data.details || []);
-        setFrom(data.from || "");
-        setTo(data.to || "");
-      } catch (error) {
-        console.error("Error fetching experience:", error);
-      }
-    };
+    useEffect(() => {
+      const fetchExperience = async () => {
+        try {
+          const response = await axios.get(
+            `${baseURL}/api/v1/expernince/${id}`
+          );
+          const data = response.data.expernince;
+          setExperninceData(data);
+          setDesignation(data.designation || "");
+          setcompany(data.company || "");
+          setDetails(data.details || []);
+          setFrom(data.from || "");
+          setTo(data.to || "");
+        } catch (error) {
+          console.error("Error fetching experience:", error);
+        }
+      };
 
     fetchExperience();
   }, [id]);

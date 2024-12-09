@@ -72,8 +72,8 @@ const Message = () => {
                         {element.senderName}
                       </CardDescription>
                       <CardDescription className="text-slate-950">
-                        <span className="font-bold mr-2">Subject:</span>
-                        {element.subject}
+                        <span className="font-bold mr-2">Email ID:</span>
+                        {element.email}
                       </CardDescription>
                       <CardDescription className="text-slate-950">
                         <span className="font-bold mr-2">Message:</span>

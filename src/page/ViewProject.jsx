@@ -3,6 +3,8 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { baseURL } from "@/store/slices/baseUrl";
+
 
 const ViewProject = () => {
   const { id } = useParams();
@@ -24,7 +26,7 @@ const ViewProject = () => {
   useEffect(() => {
     const getProject = async () => {
       await axios
-        .get(`https://servrer-portfolio.onrender.com/api/v1/project/${id}`, {
+        .get(`${baseURL}/api/v1/project/${id}`, {
           withCredentials: true,
         })
         .then((res) => {

@@ -15,6 +15,8 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import SpacialLoadingButton from "./sub-component/SpacialLoadingButton";
 import { clearAllProjectErrors, getAllProjects, resetProjectSlice, updateProject } from "@/store/slices/projectSlice";
+import { baseURL } from "@/store/slices/baseUrl";
+
 
 const UpdateProject = () => {
   const dispatch = useDispatch();
@@ -63,7 +65,7 @@ const UpdateProject = () => {
  useEffect(() => {
     const getProject = async () => {
       await axios
-        .get(`https://servrer-portfolio.onrender.com/api/v1/project/get/${id}`, {
+        .get(`${baseURL}/api/v1/project/${id}`, {
           withCredentials: true,
         })
         .then((res) => {

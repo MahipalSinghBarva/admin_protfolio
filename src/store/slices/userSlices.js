@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const baseURL = "https://servrer-portfolio.onrender.com"
-// const baseURL = "http://localhost:3000"
+import { baseURL } from "./baseUrl"
+
 
 
 

@@ -119,15 +119,16 @@ const Dashboard = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        await dispatch(getAllProjects());
-        await dispatch(getAllSkills())
-        await dispatch(getAllSoftwareApplications());
-        await dispatch(getAllExperience());
+        await Promise.all([
+          dispatch(getAllProjects()),
+          dispatch(getAllSkills()),
+          dispatch(getAllSoftwareApplications()),
+          dispatch(getAllExperience()),
+        ]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
-
     fetchData();
   }, [dispatch]);
   return (
@@ -138,7 +139,7 @@ const Dashboard = () => {
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
               <Card className="sm:col-span-2">
                 <CardHeader className="pb-3">
-                  <CardDescription className="max-w-lg text-balance leading-relaxed">
+                  <CardDescription className="w-full text-balance leading-relaxed">
                     {user?.aboutMe}
                   </CardDescription>
                   <CardDescription className="max-w-lg text-balance leading-relaxed">

@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
-const baseURL = "https://servrer-portfolio.onrender.com"
+import { baseURL } from "./baseUrl"
+
+
 
 const timelineSlice = createSlice({
     name: "timeline",
